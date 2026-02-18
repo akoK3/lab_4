@@ -1,0 +1,27 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page 1</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Page 1</h1>
+      <p>Visits: <span id="count" class="count">...</span></p>
+      <nav>
+        <a href="index.html">Index</a>
+        <a href="page1.html">Page 1</a>
+        <a href="page2.html">Page 2</a>
+      </nav>
+    </main>
+
+    <script>
+      fetch('/hits/page1')
+        .then(r => r.text())
+        .then(n => { document.getElementById('count').textContent = n; })
+        .catch(() => { document.getElementById('count').textContent = 'error'; });
+    </script>
+  </body>
+</html>
