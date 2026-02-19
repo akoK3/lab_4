@@ -17,21 +17,12 @@
       </nav>
     </main>
 
-    <script src="config.js"></script>
     <script>
       const countEl = document.getElementById('count');
-      const apiBase = window.API_BASE || '';
-      const isGithubPages = location.hostname.endsWith('github.io');
-      const endpoint = apiBase ? `${apiBase}/hits/page1` : '/hits/page1';
-
-      if (isGithubPages && !apiBase) {
-        countEl.textContent = 'Set API_BASE in config.js';
-      } else {
-        fetch(endpoint)
-          .then(r => r.text())
-          .then(n => { countEl.textContent = n; })
-          .catch(() => { countEl.textContent = 'error'; });
-      }
+      const key = 'visits_page1';
+      const next = Number(localStorage.getItem(key) || 0) + 1;
+      localStorage.setItem(key, String(next));
+      countEl.textContent = next;
     </script>
   </body>
 </html>
