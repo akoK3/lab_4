@@ -3,10 +3,19 @@
 const express = require("express");
 const app = express();
 
+const PORT = process.env.PORT || 3000;
+const HOST = "0.0.0.0";
+
 // counters MUST be before the route
 let index = 0;
 let page1 = 0;
 let page2 = 0;
+
+// allow GitHub Pages (and any origin) to call the counter API
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 // serve static files (your html) from this folder
 app.use(express.static(__dirname));
@@ -28,10 +37,4 @@ app.get("/hits/:page", (req, res) => {
   }
 });
 
-fetch('/hits/index')
-  .then(r => {
-    if (!r.ok) throw new Error("no server");
-    return r.text();
-  })
-  .then(n => document.getElementById('count').textContent = n)
-  .catch(() => document.getElementById('count').textContent = 'Run with node server.js');
+app.listen(PORT, HOST);
