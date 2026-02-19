@@ -28,4 +28,10 @@ app.get("/hits/:page", (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log("http://localhost:3000"));
+fetch('/hits/index')
+  .then(r => {
+    if (!r.ok) throw new Error("no server");
+    return r.text();
+  })
+  .then(n => document.getElementById('count').textContent = n)
+  .catch(() => document.getElementById('count').textContent = 'Run with node server.js');
